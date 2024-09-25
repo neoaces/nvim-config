@@ -68,8 +68,8 @@ keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true, desc = "Move to
 keyset("n", "gd", "<Plug>(coc-definition)", {silent = true, desc = "Go to definition"})
 keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true, desc = "Go to type definition"})
 keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true, desc = "Go to implementation"})
-keyset("n", "gr", "<Plug>(coc-references)", {silent = true, desc = "Go to references"})
-
+keyset("n", "gr", "<Plug>(coc-codeaction-line)", {silent = true, desc = "Go to code action"})
+keyset("n", "gc", "<Plug>(coc-references)", {silent = true, desc = "Go to references"})
 -- Use <c-space> to trigger completion
 keyset("i", "<c-space>", "coc#refresh()", {silent = true, expr = true})
 
@@ -90,8 +90,9 @@ vim.opt.shiftwidth = 4
 
 -- toggleterm.lua
 require("toggleterm").setup{}
-keyset('n', '<leader>rh', ":ToggleTerm size=20 direction=horizontal<CR>", { desc = 'Toggle terminal' })
-keyset('n', '<leader>rv', ":ToggleTerm size=90 direction=vertical<CR>", { desc = 'Toggle terminal' })
+keyset('n', '<leader>rh', ":ToggleTerm size=50 direction=horizontal<CR>", { desc = 'Toggle terminal - horizontal split' })
+keyset('n', '<leader>rv', ":ToggleTerm size=90 direction=vertical<CR>", { desc = 'Toggle terminal - vertical split' })
+keyset('n', '<leader>rf', ":ToggleTerm direction=float<CR>", { desc = 'Toggle terminal - floating' })
 
 function _G.set_terminal_keymaps()
     local opts = {buffer = 0}
@@ -133,7 +134,7 @@ require("cmake-tools").setup {
 	new_task_opts = {
 	    strategy = {
 		"toggleterm",
-		direction = "vertical",
+		direction = "float",
 	    }
 	},
     }},
@@ -143,7 +144,7 @@ require("cmake-tools").setup {
 	    new_task_opts = {
 		strategy = {
 		    "toggleterm",
-		    direction = "vertical",
+		    direction = "float",
 		}
 	    },
 	}
@@ -174,5 +175,4 @@ dap.adapters.codelldb = {
 keyset('n', '<leader>dpt', ":DapToggleBreakpoint<CR>", { desc = 'Toggle breakpoint', silent = true })
 
 -- Post Commands
-vim.cmd("imap <C-n> <Plug>(coc-snippets-expand-jump)")
-vim.cmd("nnoremap <leader>dpe <Cmd>lua require('dapui').eval()<CR>")
+vim.cmd("set number")
