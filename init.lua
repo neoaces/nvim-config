@@ -2,7 +2,6 @@
 vim.g.mapleader = " "
 vim.cmd("set hidden")
 require("config.lazy")
-vim.cmd("colorscheme kanagawa-dragon")
 
 local function mapper(mode, input, exec, opts)
     vim.keymap.set(mode, input, exec, opts)
@@ -16,6 +15,10 @@ local function vmap(input, exec, opts)
     mapper('v', input, exec, opts)
 end
 
+nmap('j', 'n', {noremap = false}) -- Remap for / find
+nmap('J', 'N', {noremap = false}) -- Remap for / find
+
+-- Direction controls, Colemak
 nmap('h', 'h', { noremap = false })
 nmap('H', '_', { noremap = false })
 nmap('n', 'j', { noremap = false })
@@ -24,9 +27,9 @@ nmap('e', 'k', { noremap = true })
 nmap('E', '5k', { noremap = true })
 nmap('i', 'l', { noremap = true })
 nmap('I', '$', { noremap = true })
-nmap('k', 'i', { noremap = true })
-nmap('l', 'u', { noremap = true })
-nmap('L', '<C-r>', { noremap = true })
+nmap('<C-n>', 'n', {noremap = true}) 
+nmap('<C-e>', 'e', {noremap = true}) 
+
 
 vmap('n', 'j', { noremap = false })
 vmap('N', '3j', { noremap = false })
@@ -34,6 +37,10 @@ vmap('e', 'k', { noremap = true })
 vmap('E', '3k', { noremap = false })
 vmap('i', 'l', { noremap = true })
 vmap('I', '$', { noremap = true })
+
+nmap('k', 'i', { noremap = true }) -- Insert [k]
+nmap('l', 'u', { noremap = true }) -- Undo [l]
+nmap('L', '<C-r>', { noremap = true }) -- Redo [<C-r>]
 
 -- coc-clangd
 local keyset = vim.keymap.set
@@ -58,7 +65,10 @@ end
 keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
 keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
+-- See documentation under cursor [K]
 keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
+
+-- Confirm auto-complete with [<CR>]
 keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 keyset("n", "<leader>rn", "<Plug>(coc-rename)", {silent = true, desc = "Rename the file under the cursor"})
 
@@ -80,12 +90,14 @@ require("telescope").load_extension "file_browser"
 keyset('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 keyset('n', '<leader>fo', builtin.oldfiles, { desc = 'Telescope recent files' })
 keyset('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-keyset('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+keyset('n', '<leader>ft', builtin.help_tags, { desc = 'Telescope help tags' })
 keyset('n', '<leader>fd', builtin.diagnostics, { desc = 'Telescope diagnostics' })
-keyset("n", "<leader>fb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", {desc = "Telescope file browser in current folder"})
-keyset("n", "<leader>fco", ":Telescope file_browser path='~/.config/nvim/' select_buffer=true<CR>", {desc = "Telescope file browser in config folder"})
+keyset("n", "<leader>fbb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", {desc = "Telescope file browser in current folder"})
+keyset("n", "<leader>fco", ":Telescope file_browser path='/Users/neocodes/.config/nvim' select_buffer=true<CR>", {desc = "Telescope file browser in config folder"})
 keyset("n", "<leader>fcm", ":Telescope cmake_tools<CR>", {desc = "Telescope cmake_tools"})
-
+keyset("n", "<leader>fbf", ":Telescope buffers<CR>", {desc = "Telescope buffers"})
+keyset("n", "<leader>flw", ":Telescope coc workspace_symbols<CR>" , {desc = "Telescope COC workspace symbols"})
+keyset("n", "<leader>fld", ":Telescope coc document_symbols<CR>", {desc = "Telescope COC document symbols"})
 vim.opt.shiftwidth = 4
 
 -- toggleterm.lua
@@ -171,8 +183,13 @@ dap.adapters.codelldb = {
 	args = {"--port", "13000"},
     }
 }
+-- Neotree 
+keyset('n', '<leader>nh', ":Neotree filesystem reveal left<CR>", {desc = 'Open Neotree to the left', silent = true})
+keyset('n', '<leader>ni', ":Neotree filesystem reveal right<CR>", {desc = 'Open Neotree to the right', silent = true})
+keyset('n', '<leader>nn', ":Neotree filesystem reveal bottom<CR>", {desc = 'Open Neotree to the bottom', silent = true})
+keyset('n', '<leader>ne', ":Neotree filesystem reveal top<CR>", {desc = 'Open Neotree to the top', silent = true})
+keyset('n', '<leader>nf', ":Neotree filesystem reveal floating<CR>", {desc = 'Open Neotree floating', silent = true})
 
-keyset('n', '<leader>dpt', ":DapToggleBreakpoint<CR>", { desc = 'Toggle breakpoint', silent = true })
-
--- Post Commands
+-- Post-commands
 vim.cmd("set number")
+vim.cmd("colorscheme kanagawa-dragon")
