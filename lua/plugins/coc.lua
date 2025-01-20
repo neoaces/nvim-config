@@ -1,5 +1,5 @@
 return {
   "neoclide/coc.nvim",
-  branch = "master",
+  branch = "release",
   build = "yarn install --frozen-lockfile",
 }

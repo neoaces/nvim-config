@@ -7,6 +7,8 @@ local function mapper(mode, input, exec, opts)
     vim.keymap.set(mode, input, exec, opts)
 end
 
+
+
 local function nmap(input, exec, opts)
     mapper('n', input, exec, opts)
 end
@@ -80,6 +82,8 @@ keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true, desc = "Go to t
 keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true, desc = "Go to implementation"})
 keyset("n", "gr", "<Plug>(coc-codeaction-line)", {silent = true, desc = "Go to code action"})
 keyset("n", "gc", "<Plug>(coc-references)", {silent = true, desc = "Go to references"})
+keyset("n", "gh", ":CocCommand clangd.switchSourceHeader<CR>", {silent = true, desc = "Go to source header"})
+
 -- Use <c-space> to trigger completion
 keyset("i", "<c-space>", "coc#refresh()", {silent = true, expr = true})
 
